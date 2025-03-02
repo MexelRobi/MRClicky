@@ -95,7 +95,7 @@
                 const data = await response.json();
                 
                 // Suchen nach der macOS-Version (.dmg)
-                const macRelease = data.assets.find(asset => asset.name.endsWith('.dmg'));
+                const macRelease = data.assets.find(asset => asset.name.endsWith('.pkg'));
 
                 if (macRelease) {
                     document.getElementById('mac-download').setAttribute('href', macRelease.browser_download_url);
