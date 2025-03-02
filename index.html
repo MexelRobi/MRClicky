@@ -1,1 +1,38 @@
-Loading...
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MRClicky App Downloads</title>
+    <script>
+        // Funktion zum Abrufen des neuesten Releases von GitHub
+        async function fetchLatestRelease() {
+            const response = await fetch('https://api.github.com/repos/Benutzername/MRClicky/releases/latest');
+            const data = await response.json();
+
+            const iosRelease = data.assets.find(asset => asset.name.endsWith('.ipa'));
+            const macRelease = data.assets.find(asset => asset.name.endsWith('.dmg'));
+
+            document.getElementById('ios-download').href = iosRelease ? iosRelease.browser_download_url : '#';
+            document.getElementById('mac-download').href = macRelease ? macRelease.browser_download_url : '#';
+
+            document.getElementById('ios-version').textContent = iosRelease ? iosRelease.name : 'Keine iOS-Version verfügbar';
+            document.getElementById('mac-version').textContent = macRelease ? macRelease.name : 'Keine macOS-Version verfügbar';
+        }
+
+        // Ruft die Funktion beim Laden der Seite auf
+        window.onload = fetchLatestRelease;
+    </script>
+</head>
+<body>
+    <h1>MRClicky App Downloads</h1>
+    
+    <h2>TestFlight iOS Version</h2>
+    <p id="ios-version">Lädt die iOS-Version...</p>
+    <a id="ios-download" href="#">iOS für TestFlight herunterladen</a>
+    
+    <h2>macOS Version</h2>
+    <p id="mac-version">Lädt die macOS-Version...</p>
+    <a id="mac-download" href="#">macOS Version herunterladen</a>
+</body>
+</html>
